@@ -14,15 +14,17 @@
 - [监听上传图片回调](#监听上传图片回调)
 - [获取经纬度](#获取经纬度)
 - [根据经纬度显示地图](#根据经纬度显示地图)
-- [判断是否登陆](#判断是否登陆)
-- [去登陆](#去登陆)
+- [判断是否登录](#判断是否登录)
+- [去登录](#去登录)
 - [url跳转](#url跳转)
 - [webView标题](#webView标题)
-- [登陆回调](#登陆回调)
+- [登录回调](#登录回调)
 - [地理位置提交](#地理位置提交)
 - [分享](#分享)
 - [显示正在加载弹层](#显示正在加载弹层)
 - [隐藏正在加载弹层](#隐藏正在加载弹层)
+- [响应客户端返回按键](#响应客户端返回按键)
+- [关闭应用，直接退出](#关闭应用，直接退出)
 - [如果请求失败，返回格式](#如果请求失败，返回格式)
 
 # **返回按钮**
@@ -52,7 +54,7 @@
           return ;
         }
         //   native操作
-        weex.requireModule('thaw').onGoBack("1");
+        weex.requireModule('THAW').onGoBack("1");
         return ;
       }
     }
@@ -75,8 +77,8 @@
     export default {
         created () {
             var me = this;
-            var thaw = weex.requireModule('thaw');
-            thaw.onGetData('1',function(ret) {  
+            var THAW = weex.requireModule('thaw');
+            THAW.onGetData('1',function(ret) {  
                 me.userid = ret.userid;
                 me.userName = ret.userName;
                 //执行操作
@@ -105,7 +107,7 @@
     export default {
         call (){
             //   native操作
-            weex.requireModule('thaw').onGoCall("400-800-1616");
+            weex.requireModule('THAW').onGoCall("400-800-1616");
         }
     }
 </script>
@@ -202,7 +204,7 @@ let globalEvent = weex.requireModule('globalEvent');
 </script>
 ```
 
-# 判断是否登陆
+# 判断是否登录
 判断用户是否登陆，登陆返回用户的id，未登录返回为0，返回JSON：{state:'success',data:'0'}
 
 ```
@@ -222,7 +224,7 @@ let globalEvent = weex.requireModule('globalEvent');
 </script>
 ```
 
-# 去登陆
+# 去登录
 调起登陆弹层
 
 ```
@@ -279,7 +281,7 @@ url跳转，需要传一个参数，参数为需要跳转的url地址
 </script>
 ```
 
-# 登陆回调
+# 登录回调
 点击去登陆的时候监听用户登陆是否成功，如果成功返回用户的userId 返回JSON：{userId:''}
 
 ```
@@ -294,7 +296,7 @@ let globalEvent = weex.requireModule('globalEvent');
     export default {
         call (){
             //   native操作
-            globalEvent.addEvenetListener('onGoLoginCallBack',function(data){
+            globalEvent.addEventListener('onGoLoginCallBack',function(data){
                 
             })
         }
@@ -338,7 +340,7 @@ let globalEvent = weex.requireModule('globalEvent');
     export default {
         call (){
             //   native操作
-            weex.requireModule('THAW').onMenuShare({
+            weex.requireModule('THAW').onShowShare({
                 title: "", // 分享标题
                 desc: "", // 分享描述
                 link: "", // 分享链接
@@ -358,7 +360,7 @@ let globalEvent = weex.requireModule('globalEvent');
 </template>
 
 <!--js-->
-<script>let
+<script>
      let thaw = weex.requireModule('THAW')
      export default {
         call (){
@@ -378,7 +380,7 @@ let globalEvent = weex.requireModule('globalEvent');
 </template>
 
 <!--js-->
-<script>let
+<script>
      let thaw = weex.requireModule('THAW')
      export default {
         call (){
@@ -390,7 +392,7 @@ let globalEvent = weex.requireModule('globalEvent');
 ```
 
 # 响应客户端返回按键
-    直接返回到app页面
+    app返回键做出对应操作
 ```
 <!--html-->
 <template>
@@ -398,16 +400,39 @@ let globalEvent = weex.requireModule('globalEvent');
 </template>
 
 <!--js-->
-<script>let
-     let thaw = weex.requireModule('THAW')
+<script>
+    let globalEvent = weex.requireModule('globalEvent');
      export default {
         call (){
+            //   native操作
+            globalEvent.addEventListener('onRespondNativeBack',function(data){
+                
+            })
+        }
+    }
+</script>
+```
+
+# 关闭应用，直接退出
+    直接返回到app页面
+```
+<!--html-->
+<template>
+    <div @click="back" class="back"></div>
+</template>
+
+<!--js-->
+<script>
+     let thaw = weex.requireModule('THAW')
+     export default {
+        back (){
             //   native操作
             thaw.onGoBack();
         }
     }
 </script>
 ```
+
 
 # 如果请求失败，返回格式
 JSON：{state:error,data,"失败原因"}
