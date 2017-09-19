@@ -1,4 +1,5 @@
 # THAW
+
 卡车之家weex开发--native与js通信
 
 
@@ -12,7 +13,11 @@
 
 
 # JsBridge
-卡车之家前端开发--native与js通信
 
+客户端通用js交互定义
+
+---
+##### 参考文档：[https://github.com/lzyzsd/JsBridge](https://github.com/lzyzsd/JsBridge)
+---
 
 - [JsBridge文档地址：JsBridge.md](JsBridge.md)
